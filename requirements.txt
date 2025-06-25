@@ -1,0 +1,10 @@
+pillow
+pytesseract
+requests
+jsonschema
+ttkbootstrap
+langchain
+langchain-community
+langchain-huggingface
+faiss-cpu
+sentence-transformers
