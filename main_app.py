@@ -13,7 +13,7 @@ from config import SYSTEM_PROMPT, API_URL, API_KEY, HEADERS, MINDMAP_SCHEMA
 from vectorstore_setup import load_vectorstore
 
 retriever = load_vectorstore()
-from utils import load_history, save_history
+from utils import load_history, save_history,SENSITIVE_WORDS
 from jsonschema import validate
 
 class KnowledgeApp:
@@ -93,6 +93,12 @@ class KnowledgeApp:
         prompt = self.input_text.get("1.0", tk.END).strip()
         ocr = getattr(self, "ocr_text", "").strip()
 
+        combined_input = prompt + "\n" + ocr
+        for word in SENSITIVE_WORDS:
+            if word in combined_input:
+                messagebox.showwarning("警告", f"输入中包含敏感词：'{word}''，请修改后再试。")
+                return
+            
         if not prompt and not ocr:
             messagebox.showwarning("提示", "请输入内容或上传图片。")
             return
@@ -196,7 +202,6 @@ class KnowledgeApp:
         threading.Thread(target=query, daemon=True).start()
 
 if __name__ == "__main__":
-    pytesseract.pytesseract.tesseract_cmd = r"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
     root = tb.Window(themename="darkly")
     app = KnowledgeApp(root)
     root.mainloop()

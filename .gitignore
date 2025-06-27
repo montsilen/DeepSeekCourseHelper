@@ -1,3 +1,4 @@
 /tmp
 /course_vector_store
 *.json
+/__pycache__
