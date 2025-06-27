@@ -1,9 +1,11 @@
 import pytesseract
+from dotenv import load_dotenv
+import os
 
-pytesseract.pytesseract.tesseract_cmd = r"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
+load_dotenv()
 
 API_URL = "https://api.deepseek.com/chat/completions"
-API_KEY = "sk-b1177a26a6614347adfe0c642a32022a" 
+API_KEY = os.getenv("API_KEY")
 HEADERS = {
     "Content-Type": "application/json",
     "Authorization": f"Bearer {API_KEY}"
